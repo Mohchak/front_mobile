@@ -1,0 +1,712 @@
+ <div>
+                        Table Id : {tableId}
+                    </div>
+                    <div>
+                        Device : {deviceType}
+                    </div>
+                    <div>
+                        Browser name : {browserName}
+                    </div>
+                    <div>
+                        browserVersion : {browserVersion}
+                    </div>
+                    <div>
+                        osVersion : {osVersion}
+                    </div>
+                    <div>
+                        osName : {osName}
+                    </div>
+                    <div>
+                        mobileVendor : {mobileVendor}
+                    </div>
+                    <div>
+                        mobileModel : {mobileModel}
+                    </div>
+
+
+                    <DialogTitle id="alert-dialog-title">
+                                       {productDialog.productName}
+                                   </DialogTitle>
+                                   <DialogContent>
+                                       <DialogContentText id="alert-dialog-description">
+                                           Let Google help apps determine location. This means sending anonymous
+                                           location data to Google, even when no apps are running.
+                                       </DialogContentText>
+                                   </DialogContent>
+                                   <DialogActions>
+                                       <Button onClick={handleClose}>Disagree</Button>
+                                       <Button onClick={handleClose} autoFocus>
+                                           Agree
+                                       </Button>
+                                   </DialogActions>
+
+                                   <Tabs
+                                                       value={value}
+                                                       onChange={handleChange}
+                                                       variant="scrollable"
+                                                       scrollButtons="auto"
+                                                       aria-label="scrollable auto tabs example"
+                                                   >
+                                                       {
+                                                           menus.map((menu, index) => (
+                                                               <Tab key={menu.productCategoryName} label={menu.productCategoryName} />
+                                                           ))
+                                                       }
+                                                   </Tabs>
+
+
+    {
+        id: 2,
+        productCategoryName: 'Pizzas',
+        image: "https://assets.afcdn.com/recipe/20200206/107152_w768h583c1cx176cy267cxb353cyb535.webp",
+        panel: 'panel2',
+        index : '2',
+        products: [
+            {
+                id: 1,
+                productName: 'Margherita',
+                price: 60.00,
+                image: "https://www.eatthis.com/wp-content/uploads/sites/4/media/images/ext/520765216/classic-beef-burger.jpg?resize=640,468&quality=82&strip=all",
+                description: "A traditional ground beef burger can be a good, high-protein meal—especially if it's grass-finished beef, which we'll tell you more about in a second.",
+                ingredients: [
+                    {
+                        status : true,
+                        ingredientName: 'Beef',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Tomato',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Ketchup',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Onion',
+                    }
+                ],
+                cpt:0,
+            },
+            {
+                id: 2,
+                productName: 'Savoyard',
+                price: 45.00,
+                image: "https://www.eatthis.com/wp-content/uploads/sites/4/media/images/ext/316673155/elk-burger.jpg?resize=640,468&quality=82&strip=all",
+                description: "An elk burger not only has more protein than traditional ground beef, but it's also significantly lower in fat.",
+                ingredients: [
+                    {
+                        status : true,
+                        ingredientName: 'Elk',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Tomato',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Ketchup',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Onion',
+                    }
+                ],
+                cpt:0,
+            },
+            {
+                id: 3,
+                productName: 'Calzone',
+                price: 99.00,
+                image: "https://www.eatthis.com/wp-content/uploads/sites/4/media/images/ext/254552601/raw-portobello-burger.jpg?resize=640,468&quality=82&strip=all",
+                description: "A traditional ground beef burger can be a good, high-protein meal—especially if it's grass-finished beef, which we'll tell you more about in a second.",
+                ingredients: [
+                    {
+                        status : true,
+                        ingredientName: 'Beef',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Tomato',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Ketchup',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Onion',
+                    }
+                ],
+                cpt:0,
+            },
+            {
+                id: 4,
+                productName: 'Capricious',
+                price: 20.00,
+                image: "https://www.eatthis.com/wp-content/uploads/sites/4/media/images/ext/184168996/turkey-burger.jpg?resize=640,468&quality=82&strip=all",
+                description: "A traditional ground beef burger can be a good, high-protein meal—especially if it's grass-finished beef, which we'll tell you more about in a second.",
+                ingredients: [
+                    {
+                        status : true,
+                        ingredientName: 'Beef',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Tomato',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Ketchup',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Onion',
+                    }
+                ],
+                cpt:0,
+            },
+            {
+                id: 5,
+                productName: 'Marinara',
+                price: 110.00,
+                image: "https://www.eatthis.com/wp-content/uploads/sites/4/media/images/ext/351400125/pumpkin-veggie-burger.jpg?resize=640,468&quality=82&strip=all",
+                description: "A traditional ground beef burger can be a good, high-protein meal—especially if it's grass-finished beef, which we'll tell you more about in a second.",
+                ingredients: [
+                    {
+                        status : true,
+                        ingredientName: 'Beef',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Tomato',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Ketchup',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Onion',
+                    }
+                ],
+                cpt:0,
+            },
+        ]
+    },
+    {
+        id: 3,
+        productCategoryName: 'Salade',
+        image: "https://img.cuisineaz.com/680x357/2021/03/18/i165907-salade-cesar-min.jpeg",
+        panel: 'panel3',
+        index : '3',
+        products: [
+            {
+                id: 1,
+                productName: 'Salde Cesar',
+                price: 60.00,
+                image: "https://www.eatthis.com/wp-content/uploads/sites/4/media/images/ext/520765216/classic-beef-burger.jpg?resize=640,468&quality=82&strip=all",
+                description: "A traditional ground beef burger can be a good, high-protein meal—especially if it's grass-finished beef, which we'll tell you more about in a second.",
+                ingredients: [
+                    {
+                        status : true,
+                        ingredientName: 'Beef',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Tomato',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Ketchup',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Onion',
+                    }
+                ],
+                cpt:0,
+            },
+            {
+                id: 2,
+                productName: 'Marocaine',
+                price: 45.00,
+                image: "https://www.eatthis.com/wp-content/uploads/sites/4/media/images/ext/316673155/elk-burger.jpg?resize=640,468&quality=82&strip=all",
+                description: "An elk burger not only has more protein than traditional ground beef, but it's also significantly lower in fat.",
+                ingredients: [
+                    {
+                        status : true,
+                        ingredientName: 'Elk',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Tomato',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Ketchup',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Onion',
+                    }
+                ],
+                cpt:0,
+            },
+            {
+                id: 3,
+                productName: 'Calzone',
+                price: 99.00,
+                image: "https://www.eatthis.com/wp-content/uploads/sites/4/media/images/ext/254552601/raw-portobello-burger.jpg?resize=640,468&quality=82&strip=all",
+                description: "A traditional ground beef burger can be a good, high-protein meal—especially if it's grass-finished beef, which we'll tell you more about in a second.",
+                ingredients: [
+                    {
+                        status : true,
+                        ingredientName: 'Beef',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Tomato',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Ketchup',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Onion',
+                    }
+                ],
+                cpt:0,
+            },
+            {
+                id: 4,
+                productName: 'Capricious',
+                price: 20.00,
+                image: "https://www.eatthis.com/wp-content/uploads/sites/4/media/images/ext/184168996/turkey-burger.jpg?resize=640,468&quality=82&strip=all",
+                description: "A traditional ground beef burger can be a good, high-protein meal—especially if it's grass-finished beef, which we'll tell you more about in a second.",
+                ingredients: [
+                    {
+                        status : true,
+                        ingredientName: 'Beef',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Tomato',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Ketchup',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Onion',
+                    }
+                ],
+                cpt:0,
+            },
+            {
+                id: 5,
+                productName: 'Marinara',
+                price: 110.00,
+                image: "https://www.eatthis.com/wp-content/uploads/sites/4/media/images/ext/351400125/pumpkin-veggie-burger.jpg?resize=640,468&quality=82&strip=all",
+                description: "A traditional ground beef burger can be a good, high-protein meal—especially if it's grass-finished beef, which we'll tell you more about in a second.",
+                ingredients: [
+                    {
+                        status : true,
+                        ingredientName: 'Beef',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Tomato',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Ketchup',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Onion',
+                    }
+                ],
+                cpt:0,
+            },
+        ]
+    },
+    {
+        id: 4,
+        productCategoryName: 'Plats',
+        image: "https://thumbs.dreamstime.com/z/plat-pour-l-entr%C3%A9e-principale-avec-fried-chicken-drumsticks-croustillant-50666112.jpg",
+        panel: 'panel4',
+        index : '4',
+        products: [
+            {
+                id: 1,
+                productName: 'Plat chiken crispy',
+                price: 60.00,
+                image: "https://www.eatthis.com/wp-content/uploads/sites/4/media/images/ext/520765216/classic-beef-burger.jpg?resize=640,468&quality=82&strip=all",
+                description: "A traditional ground beef burger can be a good, high-protein meal—especially if it's grass-finished beef, which we'll tell you more about in a second.",
+                ingredients: [
+                    {
+                        status : true,
+                        ingredientName: 'Beef',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Tomato',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Ketchup',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Onion',
+                    }
+                ],
+                cpt:0,
+            },
+            {
+                id: 2,
+                productName: 'Savoyard',
+                price: 45.00,
+                image: "https://www.eatthis.com/wp-content/uploads/sites/4/media/images/ext/316673155/elk-burger.jpg?resize=640,468&quality=82&strip=all",
+                description: "An elk burger not only has more protein than traditional ground beef, but it's also significantly lower in fat.",
+                ingredients: [
+                    {
+                        status : true,
+                        ingredientName: 'Elk',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Tomato',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Ketchup',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Onion',
+                    }
+                ],
+                cpt:0,
+            },
+            {
+                id: 3,
+                productName: 'Calzone',
+                price: 99.00,
+                image: "https://www.eatthis.com/wp-content/uploads/sites/4/media/images/ext/254552601/raw-portobello-burger.jpg?resize=640,468&quality=82&strip=all",
+                description: "A traditional ground beef burger can be a good, high-protein meal—especially if it's grass-finished beef, which we'll tell you more about in a second.",
+                ingredients: [
+                    {
+                        status : true,
+                        ingredientName: 'Beef',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Tomato',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Ketchup',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Onion',
+                    }
+                ],
+                cpt:0,
+            },
+            {
+                id: 4,
+                productName: 'Capricious',
+                price: 20.00,
+                image: "https://www.eatthis.com/wp-content/uploads/sites/4/media/images/ext/184168996/turkey-burger.jpg?resize=640,468&quality=82&strip=all",
+                description: "A traditional ground beef burger can be a good, high-protein meal—especially if it's grass-finished beef, which we'll tell you more about in a second.",
+                ingredients: [
+                    {
+                        status : true,
+                        ingredientName: 'Beef',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Tomato',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Ketchup',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Onion',
+                    }
+                ],
+                cpt:0,
+            },
+            {
+                id: 5,
+                productName: 'Marinara',
+                price: 110.00,
+                image: "https://www.eatthis.com/wp-content/uploads/sites/4/media/images/ext/351400125/pumpkin-veggie-burger.jpg?resize=640,468&quality=82&strip=all",
+                description: "A traditional ground beef burger can be a good, high-protein meal—especially if it's grass-finished beef, which we'll tell you more about in a second.",
+                ingredients: [
+                    {
+                        status : true,
+                        ingredientName: 'Beef',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Tomato',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Ketchup',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Onion',
+                    }
+                ],
+                cpt:0,
+            },
+        ]
+    },
+    {
+        id: 5,
+        productCategoryName: 'Desert',
+        image: "https://img.bestrecipes.com.au/xyHCn7Yr/w643-h428-cfill-q90/br/2015/01/asset-jpg-508538-1.jpg",
+        panel: 'panel5',
+        index : '5',
+        products: [
+            {
+                id: 1,
+                productName: 'narponika',
+                price: 60.00,
+                image: "https://www.eatthis.com/wp-content/uploads/sites/4/media/images/ext/520765216/classic-beef-burger.jpg?resize=640,468&quality=82&strip=all",
+                description: "A traditional ground beef burger can be a good, high-protein meal—especially if it's grass-finished beef, which we'll tell you more about in a second.",
+                ingredients: [
+                    {
+                        status : true,
+                        ingredientName: 'Beef',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Tomato',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Ketchup',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Onion',
+                    }
+                ],
+                cpt:0,
+            },
+            {
+                id: 2,
+                productName: 'Marocaine',
+                price: 45.00,
+                image: "https://www.eatthis.com/wp-content/uploads/sites/4/media/images/ext/316673155/elk-burger.jpg?resize=640,468&quality=82&strip=all",
+                description: "An elk burger not only has more protein than traditional ground beef, but it's also significantly lower in fat.",
+                ingredients: [
+                    {
+                        status : true,
+                        ingredientName: 'Elk',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Tomato',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Ketchup',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Onion',
+                    }
+                ],
+                cpt:0,
+            },
+            {
+                id: 3,
+                productName: 'Calzone',
+                price: 99.00,
+                image: "https://www.eatthis.com/wp-content/uploads/sites/4/media/images/ext/254552601/raw-portobello-burger.jpg?resize=640,468&quality=82&strip=all",
+                description: "A traditional ground beef burger can be a good, high-protein meal—especially if it's grass-finished beef, which we'll tell you more about in a second.",
+                ingredients: [
+                    {
+                        status : true,
+                        ingredientName: 'Beef',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Tomato',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Ketchup',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Onion',
+                    }
+                ],
+                cpt:0,
+            },
+            {
+                id: 4,
+                productName: 'Capricious',
+                price: 20.00,
+                image: "https://www.eatthis.com/wp-content/uploads/sites/4/media/images/ext/184168996/turkey-burger.jpg?resize=640,468&quality=82&strip=all",
+                description: "A traditional ground beef burger can be a good, high-protein meal—especially if it's grass-finished beef, which we'll tell you more about in a second.",
+                ingredients: [
+                    {
+                        status : true,
+                        ingredientName: 'Beef',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Tomato',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Ketchup',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Onion',
+                    }
+                ],
+                cpt:0,
+            },
+            {
+                id: 5,
+                productName: 'Marinara',
+                price: 110.00,
+                image: "https://www.eatthis.com/wp-content/uploads/sites/4/media/images/ext/351400125/pumpkin-veggie-burger.jpg?resize=640,468&quality=82&strip=all",
+                description: "A traditional ground beef burger can be a good, high-protein meal—especially if it's grass-finished beef, which we'll tell you more about in a second.",
+                ingredients: [
+                    {
+                        status : true,
+                        ingredientName: 'Beef',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Tomato',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Ketchup',
+                    },
+                    {
+                        status : true,
+                        ingredientName: 'Onion',
+                    }
+                ],
+                cpt:0,
+            },
+        ]
+    },
+    {
+        id: 6,
+        productCategoryName: 'Boisson',
+        image: "https://asian-recipe.com/wp-content/uploads/2021/10/5ad624bb-b1a6-4c25-a616-4caeea05bf2c.png",
+        panel: 'panel6',
+        index : '6',
+        products: [
+            {
+                id: 1,
+                productName: 'coca',
+                price: 60.00,
+                image: "https://www.eatthis.com/wp-content/uploads/sites/4/media/images/ext/520765216/classic-beef-burger.jpg?resize=640,468&quality=82&strip=all",
+                description: "A traditional ground beef burger can be a good, high-protein meal—especially if it's grass-finished beef, which we'll tell you more about in a second.",
+                ingredients: [
+
+                ],
+                cpt:0,
+            },
+            {
+                id: 2,
+                productName: 'pepsi',
+                price: 45.00,
+                image: "https://www.eatthis.com/wp-content/uploads/sites/4/media/images/ext/316673155/elk-burger.jpg?resize=640,468&quality=82&strip=all",
+                description: "An elk burger not only has more protein than traditional ground beef, but it's also significantly lower in fat.",
+                ingredients: [
+
+                ],
+                cpt:0,
+            },
+            {
+                id: 3,
+                productName: 'Fanta',
+                price: 99.00,
+                image: "https://www.eatthis.com/wp-content/uploads/sites/4/media/images/ext/254552601/raw-portobello-burger.jpg?resize=640,468&quality=82&strip=all",
+                description: "A traditional ground beef burger can be a good, high-protein meal—especially if it's grass-finished beef, which we'll tell you more about in a second.",
+                ingredients: [
+
+                ],
+                cpt:0,
+            },
+            {
+                id: 4,
+                productName: 'Huawei',
+                price: 20.00,
+                image: "https://www.eatthis.com/wp-content/uploads/sites/4/media/images/ext/184168996/turkey-burger.jpg?resize=640,468&quality=82&strip=all",
+                description: "A traditional ground beef burger can be a good, high-protein meal—especially if it's grass-finished beef, which we'll tell you more about in a second.",
+                ingredients: [
+
+                ],
+                cpt:0,
+            },
+            {
+                id: 5,
+                productName: 'Veggie Burgers',
+                price: 110.00,
+                image: "https://www.eatthis.com/wp-content/uploads/sites/4/media/images/ext/351400125/pumpkin-veggie-burger.jpg?resize=640,468&quality=82&strip=all",
+                description: "A traditional ground beef burger can be a good, high-protein meal—especially if it's grass-finished beef, which we'll tell you more about in a second.",
+                ingredients: [
+
+                ],
+                cpt:0,
+            },
+        ]
+    },
+
+    secondaryAction={
+                                                   <Box >
+                                                       {
+                                                           product.cpt > 0 &&
+                                                           <IconButton onClick={() => {removeFromCart(index1,index2)}}>
+                                                               <RemoveIcon />
+                                                           </IconButton>
+                                                       }
+                                                       <IconButton onClick={() => {addToCart(index1,index2)}}>
+                                                           <AddIcon />
+                                                       </IconButton>
+                                                   </Box>
+                                               }
+
+                                               <ListItemButton
+                                                                                              onClick={() => {handleClickOpen(index1,index2)}}
+                                                                                          sx={{p:0, ml:0.5, mr:0.5, mt:0, mb:0}}>
+                                                                                              {
+                                                                                                  product.cpt !== 0 &&
+                                                                                                  <ListItemIcon>
+                                                                                                      <IconButton sx={{alignContent: 'center'}}>
+                                                                                                          <RemoveIcon />
+                                                                                                      </IconButton>
+                                                                                                  </ListItemIcon>
+                                                                                              }
+
+                                                                                              <ListItemAvatar >
+                                                                                                  <Avatar
+                                                                                                      alt={`image :${product.productName}`}
+                                                                                                      src={product.image}
+                                                                                                  />
+                                                                                              </ListItemAvatar>
+                                                                                              <ListItemText primary={product.productName}  secondary={<Ingredient product={product}/>} />
+                                                                                          </ListItemButton>
