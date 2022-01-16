@@ -12,6 +12,9 @@ function App() {
 
     const [menus, setMenus] = useState(Data)
     const [tableId, setTableId] = useState()
+    const [cpt, setCpt] = useState(0)
+    const [cptProduct, setCptProduct] = useState(0)
+    const [total, setTotal] = useState(0)
   return (
     <div className="App">
         <BrowserRouter>
@@ -19,9 +22,8 @@ function App() {
 
                 <Route path="/" element={<DefaultPage />} />
                 <Route path="/:tableId" element={<Table setTableId={setTableId}/>} />
-                <Route path="/menu" element={<Menu tableId={tableId}/>} />
-                <Route path="/menu2" element={<MenuV2 tableId={tableId} menus={menus} setMenus={setMenus}/>} />
-                <Route path="/commande" element={<Commande menus={menus} setMenus={setMenus}/>} />
+                <Route path="/menu" element={<Menu tableId={tableId} menus={menus} setMenus={setMenus}  cpt={cpt} setCpt={setCpt} cptProduct={cptProduct} setCptProduct={setCptProduct} total={total} setTotal={setTotal}/>} />
+                <Route path="/commande" element={<Commande menus={menus} setMenus={setMenus} cpt={cpt} setCpt={setCpt} cptProduct={cptProduct} setCptProduct={setCptProduct} total={total} setTotal={setTotal}/>} />
             </Routes>
         </BrowserRouter>
 

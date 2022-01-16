@@ -710,3 +710,24 @@
                                                                                               </ListItemAvatar>
                                                                                               <ListItemText primary={product.productName}  secondary={<Ingredient product={product}/>} />
                                                                                           </ListItemButton>
+
+                                                                                          <Stack direction="row" spacing={0} key={index3}>
+                                                                                                                                                                 {
+                                                                                                                                                                     ingredient.type === 'none' && ingredient.validate === true &&
+                                                                                                                                                                     <Chip component="span" label={ingredient.ingredientName}/>
+                                                                                                                                                                 }
+                                                                                                                                                                 {
+                                                                                                                                                                     ingredient.type === 'choice' && ingredient.validate === false &&
+                                                                                                                                                                     <Chip component="span" sx={{m: 0.1}}  label={ingredient.ingredientName}/>
+                                                                                                                                                                 }
+                                                                                                                                                                 {
+                                                                                                                                                                     ingredient.type === 'choice' && ingredient.validate === true &&
+                                                                                                                                                                     ingredient.choice && ingredient.choice.map((choice, index4) => (
+                                                                                                                                                                         <div>
+                                                                                                                                                                             {
+                                                                                                                                                                                 choice.status && <Chip component="span" sx={{m: 0.1}}  label={choice.choiceName}/>
+                                                                                                                                                                             }
+                                                                                                                                                                         </div>
+                                                                                                                                                                     ))
+                                                                                                                                                                 }
+                                                                                                                                                             </Stack>

@@ -1,18 +1,46 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Chip, Typography} from "@mui/material";
 
 function Ingredient(props) {
 
-    const [product, setProduct] = useState(props.product)
+    const [ingredients, setIngredients] = useState([])
+    const [loading, setLoading] = useState(false)
+    useEffect(() => {
+        let ingredientsTmp = []
+        for(let index = 0; props.ingredients[index]; index++){
+            let ingredientTmp = {}
+            if(props.ingredients[index].type === 'none'){
+                if(props.ingredients[index].validate){
+                    ingredientTmp = {name: props.ingredients[index].ingredientName}
+                    ingredientsTmp.push(ingredientTmp)
+                }
+            }else {
+                if(props.ingredients[index].validate === false){
+                    ingredientTmp = {name: props.ingredients[index].ingredientName}
+                    ingredientsTmp.push(ingredientTmp)
+                } else {
+                    for(let indexChoice = 0; props.ingredients[index].choice[indexChoice]; indexChoice++){
+                        if(props.ingredients[index].choice[indexChoice].status){
+                            ingredientTmp = {name: props.ingredients[index].choice[indexChoice].choiceName}
+                            ingredientsTmp.push(ingredientTmp)
+                        }
+                    }
+                }
+            }
+
+        }
+        setIngredients(ingredientsTmp)
+        setLoading(true)
+    }, [props.ingredients])
 
     return (
-        <React.Fragment>
-            {
-                product.ingredients && product.ingredients.map((ingredient, index) =>(
-                    <Chip component="span" sx={{m: 0.1}} key={index} label={ingredient.ingredientName}/>
-                ))
-            }
-        </React.Fragment>
+       <div>
+           {
+               loading === true && ingredients.map((ingredient, index) => (
+                    <Chip key={index} component="span" label={ingredient.name}/>
+               ))
+           }
+       </div>
     );
 }
 

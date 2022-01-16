@@ -28,6 +28,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import Ingredient from "../../component/Ingredient";
 import * as PropTypes from "prop-types";
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import {Link} from "react-router-dom";
 const ImageButton = styled(ButtonBase)(({ theme }) => ({
     position: 'relative',
     height: 300,
@@ -141,39 +142,71 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 
+function calculTotal(menusTmp) {
+
+    let total = 0
+    console.log(menusTmp)
+    for(let indexMenu = 0; menusTmp[indexMenu]; indexMenu++) {
+        for(let indexProduct = 0; menusTmp[indexMenu].products[indexProduct]; indexProduct++) {
+            if(menusTmp[indexMenu].products[indexProduct].cpt > 0) {
+                let totalProduct = 0
+                if(menusTmp[indexMenu].products[indexProduct].choice === false && menusTmp[indexMenu].products[indexProduct].status){
+                    totalProduct = totalProduct + menusTmp[indexMenu].products[indexProduct].priceInt * menusTmp[indexMenu].products[indexProduct].cpt
+                } else if(menusTmp[indexMenu].products[indexProduct].status === false && menusTmp[indexMenu].products[indexProduct].choice === false){
+                    totalProduct = totalProduct + menusTmp[indexMenu].products[indexProduct].priceInt
+                    console.log(menusTmp[indexMenu].products[indexProduct].priceInt)
+                    for(let indexIngredient = 0; menusTmp[indexMenu].products[indexProduct].ingredients[indexIngredient]; indexIngredient++){
+                        if(menusTmp[indexMenu].products[indexProduct].ingredients[indexIngredient].type === 'none'){
+                            if(menusTmp[indexMenu].products[indexProduct].ingredients[indexIngredient].validate){
+                                totalProduct = totalProduct + menusTmp[indexMenu].products[indexProduct].ingredients[indexIngredient].price
+                                console.log(menusTmp[indexMenu].products[indexProduct].ingredients[indexIngredient].ingredientName," ",menusTmp[indexMenu].products[indexProduct].ingredients[indexIngredient].price)
+                            }
+                        } else {
+                            for(let indexChoice = 0; menusTmp[indexMenu].products[indexProduct].ingredients[indexIngredient].choice[indexChoice]; indexChoice++){
+                                    console.log(menusTmp[indexMenu].products[indexProduct].ingredients[indexIngredient].choice[indexChoice])
+                                if(menusTmp[indexMenu].products[indexProduct].ingredients[indexIngredient].choice[indexChoice].status){
+                                    totalProduct = totalProduct + menusTmp[indexMenu].products[indexProduct].ingredients[indexIngredient].choice[indexChoice].price
+                                    console.log(menusTmp[indexMenu].products[indexProduct].ingredients[indexIngredient].choice[indexChoice].choiceName," ",menusTmp[indexMenu].products[indexProduct].ingredients[indexIngredient].choice[indexChoice].price)
+                                }
+                            }
+                        }
+                    }
+                }
+                total = total + totalProduct * menusTmp[indexMenu].products[indexProduct].cpt
+            }
+        }
+    }
+    console.log(total)
+    return total;
+}
 
 function Menu(props) {
 
-    const [menus, setMenus] = useState(Data)
+    const [menus, setMenus] = useState(props.menus)
+    const [loading, setLoading] = useState(false)
+    const [cpt, setCpt] = useState(props.cpt)
+    const [cptProduct, setCptProduct] = useState(props.cptProduct)
+    const [total, setTotal] = useState(props.total)
+    useEffect(()=>{
+        setLoading(true)
+    },[])
     const [productDialog, setProductDialog] = useState({})
-
-
     const [expanded, setExpanded] = useState(false)
-    const [cpt, setCpt] = useState(0)
     const [open, setOpen] = useState(false)
     const [menusID, setMenusId] = useState()
     const [productId, setProductId] = useState()
-
-    const [productImp, setProductImp] = useState()
-
-    useEffect(() =>{
-
-    },[menus])
-
     const handleChange = (panel) => (event, isExpanded) => {
         setExpanded(isExpanded ? panel : false);
     }
 
     const addToCart = (menuId, productId) => {
         if(menus[menuId].products[productId].choice === true){
-            setOpen(true)
-            let productDialogTmp = {...menus[menuId].products[productId]}
-            setProductDialog(productDialogTmp)
-            setMenusId(menuId)
-            setProductId(productId)
+            handleClickOpen(menuId, productId)
         } else {
             let newMenu = [...menus]
             newMenu[menuId].products[productId].cpt =  newMenu[menuId].products[productId].cpt + 1
+            setCptProduct(cptProduct + 1)
+            setTotal(total + newMenu[menuId].products[productId].priceF)
             if(newMenu[menuId].products[productId].cpt === 1) {
                 setCpt(cpt + 1)
             }
@@ -182,17 +215,68 @@ function Menu(props) {
     }
 
     const removeFromCart = (menuId, productId) => {
-        let newMenu =[...menus]
+        let newMenu = [...menus]
         newMenu[menuId].products[productId].cpt =  newMenu[menuId].products[productId].cpt - 1
+        setTotal(total - newMenu[menuId].products[productId].priceF)
+        setCptProduct(cptProduct - 1)
         if(newMenu[menuId].products[productId].cpt === 0) {
             setCpt(cpt - 1)
+            if(newMenu[menuId].products[productId].status === false) {
+                newMenu[menuId].products.splice(productId,1)
+            }
         }
         setMenus(newMenu)
     }
 
     const handleClickOpen = (menuId, productId) => {
-        let productDialogTmp = {...menus[menuId].products[productId]}
-        console.log(productDialogTmp)
+
+        let ingredientsTmp = []
+        for(let index = 0; menus[menuId].products[productId].ingredients[index]; index++ ){
+            let ingredientTmp = {}
+            if(menus[menuId].products[productId].ingredients[index].type !== 'choice'){
+                ingredientTmp = {
+                    status : menus[menuId].products[productId].ingredients[index].status,
+                    type: menus[menuId].products[productId].ingredients[index].type,
+                    ingredientName: menus[menuId].products[productId].ingredients[index].ingredientName,
+                    price: menus[menuId].products[productId].ingredients[index].price,
+                    validate: menus[menuId].products[productId].ingredients[index].validate,
+                }
+            } else {
+                let choicesTmp = []
+                for(let indexChoice = 0 ; menus[menuId].products[productId].ingredients[index].choice[indexChoice]; indexChoice++) {
+                    let choiceTmp = {
+                        choiceName: menus[menuId].products[productId].ingredients[index].choice[indexChoice].choiceName,
+                        status: menus[menuId].products[productId].ingredients[index].choice[indexChoice].status,
+                        price: menus[menuId].products[productId].ingredients[index].choice[indexChoice].price,
+                    }
+                    choicesTmp.push(choiceTmp)
+                }
+                ingredientTmp = {
+                    status : menus[menuId].products[productId].ingredients[index].status,
+                    type: menus[menuId].products[productId].ingredients[index].type,
+                    ingredientName: menus[menuId].products[productId].ingredients[index].ingredientName,
+                    validate: menus[menuId].products[productId].ingredients[index].validate,
+                    choiceName: menus[menuId].products[productId].ingredients[index].choiceName,
+                    choiceNbr : menus[menuId].products[productId].ingredients[index].choiceNbr,
+                    choice : choicesTmp,
+                }
+            }
+            ingredientsTmp.push(ingredientTmp)
+        }
+
+        let productDialogTmp = {
+            id: menus[menuId].products[productId].id,
+            productName: menus[menuId].products[productId].productName,
+            priceInt: menus[menuId].products[productId].priceInt,
+            priceF: menus[menuId].products[productId].priceF,
+            image: menus[menuId].products[productId].image,
+            description: menus[menuId].products[productId].description,
+            choice: menus[menuId].products[productId].choice,
+            cpt:menus[menuId].products[productId].cpt,
+            status:menus[menuId].products[productId].status,
+            ingredients: ingredientsTmp,
+        }
+
         setProductDialog(productDialogTmp)
         setMenusId(menuId)
         setProductId(productId)
@@ -206,19 +290,20 @@ function Menu(props) {
 
     const checkBoxChange = (ingredientIndex, choiceIndex) => {
 
-        //let productTmp = {...productDialog}
-        console.log('1 ',productDialog.ingredients[ingredientIndex])
-        productDialog.ingredients[ingredientIndex].choice[choiceIndex].status = !productDialog.ingredients[ingredientIndex].choice[choiceIndex].status
-        console.table(productDialog.ingredients[ingredientIndex])
-        console.log(menusID,' ',productId)
-        console.table(menus[menusID].products[productId].ingredients)
-        productDialog.ingredients[ingredientIndex].validate = false
-        for(let index = 0; productDialog.ingredients[ingredientIndex].choice[index]; index++){
-            if(productDialog.ingredients[ingredientIndex].choice[index].status === true) {
-                productDialog.ingredients[ingredientIndex].validate = true
+        let productDialogTmp = {...productDialog}
+        productDialogTmp.ingredients[ingredientIndex].choice[choiceIndex].status = !productDialogTmp.ingredients[ingredientIndex].choice[choiceIndex].status
+        if(productDialogTmp.ingredients[ingredientIndex].choice[choiceIndex].status){
+            productDialogTmp.priceF = productDialogTmp.priceF + productDialogTmp.ingredients[ingredientIndex].choice[choiceIndex].price
+        } else{
+            productDialogTmp.priceF = productDialogTmp.priceF - productDialogTmp.ingredients[ingredientIndex].choice[choiceIndex].price
+        }
+        productDialogTmp.ingredients[ingredientIndex].validate = false
+        for(let index = 0; productDialogTmp.ingredients[ingredientIndex].choice[index]; index++){
+            if(productDialogTmp.ingredients[ingredientIndex].choice[index].status === true) {
+                productDialogTmp.ingredients[ingredientIndex].validate = true
             }
         }
-        //setProductDialog(productTmp)
+        setProductDialog(productDialogTmp)
     }
 
     const addProduct = () => {
@@ -226,6 +311,8 @@ function Menu(props) {
         if(productDialog.choice === false){
             let newMenu =[...menus]
             newMenu[menusID].products[productId].cpt =  newMenu[menusID].products[productId].cpt + 1
+            setCptProduct(cptProduct + 1)
+            setTotal(total + newMenu[menusID].products[productId].priceF)
             if(newMenu[menusID].products[productId].cpt === 1) {
                 setCpt(cpt + 1)
             }
@@ -239,26 +326,97 @@ function Menu(props) {
                 }
             }
             if(validate){
-                let newMenu =[...menus]
-                newMenu[menusID].products.splice(productId +1,0,productDialog)
-                newMenu[menusID].products.join()
-                setMenus(newMenu)
-                setOpen(false)
-                setProductDialog({})
+
+                let boolean = true
+
+                for(let index = 0; menus[menusID].products[index]; index++){
+                    if(menus[menusID].products[index].id === productDialog.id){
+                        if(JSON.stringify(menus[menusID].products[index].ingredients) === JSON.stringify(productDialog.ingredients)){
+                            console.log(menus[menusID].products[index].ingredients)
+                            console.log(productDialog.ingredients)
+                            let newMenu = [...menus]
+                            newMenu[menusID].products[index].cpt = newMenu[menusID].products[index].cpt + 1
+                            setTotal(total + newMenu[menusID].products[index].priceF)
+                            setCptProduct(cptProduct + 1)
+                            setMenus(newMenu)
+                            boolean = false
+                            break;
+                        }
+                    }
+                }
+
+                if(boolean){
+                    let productDialogTmp = {...productDialog}
+                    productDialogTmp.cpt = productDialogTmp.cpt + 1
+                    setCptProduct(cptProduct + 1)
+                    setTotal(total + productDialogTmp.priceF)
+                    if( productDialogTmp.cpt === 1) {
+                        setCpt(cpt + 1)
+                    }
+                    productDialogTmp.choice = false
+                    productDialogTmp.status = false
+                    let newMenu =[...menus]
+                    newMenu[menusID].products.splice(productId +1,0,productDialogTmp)
+                    newMenu[menusID].products.join()
+                    setMenus(newMenu)
+                    setOpen(false)
+                    setProductDialog({})
+                }else {
+                    setOpen(false)
+                }
+
             }
         }
     }
 
+    const update = () => {
+        let productDialogTmp = {...productDialog}
+
+        let newMenu = [...menus]
+
+        let indexProductId = productId
+
+        for(let index = 0; newMenu[menusID].products[index]; index++){
+            if(index !== productId && JSON.stringify(menus[menusID].products[index].ingredients) === JSON.stringify(productDialog.ingredients)){
+                productDialogTmp.cpt = productDialogTmp.cpt + menus[menusID].products[index].cpt
+                if(productId > index){
+                    newMenu[menusID].products.splice(productId,1)
+                    indexProductId  = index
+                }else{
+                    newMenu[menusID].products.splice(index,1)
+                }
+                break;
+            }
+        }
+
+        newMenu[menusID].products[indexProductId] = productDialogTmp
+        setTotal(calculTotal(newMenu))
+        setMenus(newMenu)
+        setOpen(false)
+
+    }
+    
     const checkBoxChangeIngredient = (ingredientIndex) => {
         let productTmp = {...productDialog}
         productTmp.ingredients[ingredientIndex].validate = !productTmp.ingredients[ingredientIndex].validate
-
+        if(productTmp.ingredients[ingredientIndex].validate){
+            productTmp.priceF = productTmp.priceF + productTmp.ingredients[ingredientIndex].price
+        }else{
+            productTmp.priceF = productTmp.priceF - productTmp.ingredients[ingredientIndex].price
+        }
         setProductDialog(productTmp)
+    }
+
+    const commandeClick = () => {
+        props.setMenus(menus)
+        props.setCpt(cpt)
+        props.setCptProduct(cptProduct)
+        props.setTotal(total)
     }
 
     return (
        <Box sx={{ width: '100%'}}>
-           {menus.map((menu, index1) => (
+           {loading && menus.map((menu, index1) => (
                <Accordion key={menu.productCategoryName} expanded={expanded === menu.panel} onChange={handleChange(menu.panel)}>
                    <AccordionSummary >
                        <ImageButton key={menu.productCategoryName} focusRipple >
@@ -305,28 +463,24 @@ function Menu(props) {
 
                                                    </Grid>
                                                    <Grid item xs={3} sx={{textAlign: 'right'}} onClick={() => {handleClickOpen(index1, index2)}}>
-                                                       {product.price}.00 MAD
+                                                       {product.priceF}.00 MAD
                                                    </Grid>
                                                    <Grid item xs={1} >
                                                        {
                                                            product.cpt > 0 &&
-                                                           <IconButton >
-                                                               <RemoveIcon onClick={() => {removeFromCart(index1, index2)}}/>
+                                                           <IconButton onClick={() => {removeFromCart(index1, index2)}}>
+                                                               <RemoveIcon />
                                                            </IconButton>
                                                        }
                                                    </Grid>
                                                    <Grid item xs={10} onClick={() => {handleClickOpen(index1, index2)}}>
                                                        <React.Fragment>
-                                                           {
-                                                               product.ingredients && product.ingredients.map((ingredient, index) =>(
-                                                                   <Chip component="span" sx={{m: 0.1}} key={index} label={ingredient.ingredientName}/>
-                                                               ))
-                                                           }
+                                                           <Ingredient ingredients={product.ingredients}/>
                                                        </React.Fragment>
                                                    </Grid>
                                                    <Grid item xs={1}>
-                                                       <IconButton onClick={() => {addToCart(index1,index2)}}>
-                                                           <AddIcon />
+                                                       <IconButton  onClick={() => {addToCart(index1,index2)}}>
+                                                           <AddIcon/>
                                                        </IconButton>
                                                    </Grid>
                                                </Grid>
@@ -344,16 +498,17 @@ function Menu(props) {
 
            ))
            }
-           <Dialog
-               fullScreen
-               open={open}
-               onClose={handleClose}
-               TransitionComponent={Transition}
-           >
-               <Card sx={{height: '100%'}}>
-                   <IconButton aria-label="delete" sx={{position: 'absolute',}} onClick={() => {handleClose()}}>
-                       <HighlightOffIcon />
-                   </IconButton>
+           {
+               loading && <Dialog
+                   fullScreen
+                   open={open}
+                   onClose={handleClose}
+                   TransitionComponent={Transition}
+               >
+                   <Card sx={{height: '100%'}}>
+                       <IconButton aria-label="delete" sx={{position: 'absolute',}} onClick={() => {handleClose()}}>
+                           <HighlightOffIcon />
+                       </IconButton>
                        <CardMedia
                            component="img"
                            height="350"
@@ -371,7 +526,7 @@ function Menu(props) {
                                    </Grid>
                                    <Grid item xs={4} sx={{textAlign: 'right'}}>
                                        <Typography gutterBottom variant="h5" component="div">
-                                           {productDialog.price}.00 MAD
+                                           {productDialog.priceInt}.00 MAD
                                        </Typography>
                                    </Grid>
                                </Grid>
@@ -435,19 +590,33 @@ function Menu(props) {
                            }
 
                        </CardContent>
-                      <CardActions sx={{width: 'auto'}}>
-                          <Button size="medium" color="success" sx={{width:'100%', textAlign: 'center', border:1,borderRadius:5, position:'relative',}} onClick={() => addProduct()}>
-                              Ajouter pour {productDialog.price}.00 MAD
-                          </Button>
-                      </CardActions>
-               </Card>
-           </Dialog>
+                       <CardActions sx={{width: 'auto'}}>
+                           <Button size="medium" color="success" sx={{width:'100%', textAlign: 'center', border:1,borderRadius:5, position:'relative',}} onClick={() => addProduct()}>
+                               <IconButton component="span"/>
+                               Ajouter pour {productDialog.priceF}.00 MAD
+                           </Button>
+                           {
+                               productDialog.status === false &&
+                               <Button size="medium" color="success" sx={{width:'100%', textAlign: 'center', border:1,borderRadius:5, position:'relative',}} onClick={() => update()}>
+                                   <IconButton component="span"/>
+                                   Update
+                               </Button>
+                           }
+                       </CardActions>
+                   </Card>
+               </Dialog>
+           }
+
            {
-               cpt !== 0 && <Fab aria-label="CheckOut" color="primary" sx={{ position: 'fixed', bottom: '3%',right: '2%', zIndex: 1}}>
-                   <Badge badgeContent={cpt} color="success">
-                       <ShoppingCartIcon />
-                   </Badge>
-               </Fab>
+               cpt !== 0 &&
+               <Link to={"/commande"}>
+                   <Fab aria-label="CheckOut" color="primary" sx={{ position: 'fixed', bottom: '3%',right: '2%', zIndex: 1}} onClick={() => {commandeClick()}}>
+                       <Badge badgeContent={cpt} color="success">
+                           <ShoppingCartIcon />
+                       </Badge>
+                   </Fab>
+               </Link>
+
            }
 
        </Box>

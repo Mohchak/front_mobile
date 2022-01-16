@@ -9,17 +9,19 @@ export const Data = [
             {
                 id: 1,
                 productName: 'Beef Burgers',
-                price: 60.00,
+                priceInt: 60.00,
+                priceF: 60.00,
                 image: "https://www.eatthis.com/wp-content/uploads/sites/4/media/images/ext/520765216/classic-beef-burger.jpg?resize=640,468&quality=82&strip=all",
                 description: "Short Description ....",
                 choice: true,
+                status: true,
                 ingredients: [
                     {
                         status : true,
                         type: 'none',
                         ingredientName: 'Beef',
                         price: 0.00,
-                        validate: false,
+                        validate: true,
                     },
                     {
                         status : false,
@@ -72,25 +74,35 @@ export const Data = [
             {
                 id: 2,
                 productName: 'Elk Burgers',
-                price: 45.00,
+                priceInt: 45.00,
+                priceF: 45.00,
                 image: "https://www.eatthis.com/wp-content/uploads/sites/4/media/images/ext/316673155/elk-burger.jpg?resize=640,468&quality=82&strip=all",
                 description: "An elk burger not only has more protein than traditional ground beef, but it's also significantly lower in fat.",
                 choice: false,
+                status: true,
                 ingredients: [
                     {
                         status : true,
+                        type: 'none',
+                        validate: true,
                         ingredientName: 'Elk',
                     },
                     {
                         status : true,
+                        validate: true,
+                        type: 'none',
                         ingredientName: 'Tomato',
                     },
                     {
                         status : true,
+                        type: 'none',
+                        validate: true,
                         ingredientName: 'Ketchup',
                     },
                     {
                         status : true,
+                        type: 'none',
+                        validate: true,
                         ingredientName: 'Onion',
                     }
                 ],
@@ -99,41 +111,59 @@ export const Data = [
             {
                 id: 3,
                 productName: 'Portabello Mushroom Burgers',
-                price: 99.00,
+                priceInt: 38.00,
+                priceF: 38.00,
                 image: "https://www.eatthis.com/wp-content/uploads/sites/4/media/images/ext/254552601/raw-portobello-burger.jpg?resize=640,468&quality=82&strip=all",
                 description: "A traditional ground beef burger can be a good, high-protein meal—especially if it's grass-finished beef, which we'll tell you more about in a second.",
                 choice: false,
+                status: true,
                 ingredients: [
                     {
                         status : true,
+                        type: 'none',
+                        validate: true,
                         ingredientName: 'Beef',
                     },
                     {
                         status : true,
+                        type: 'none',
+                        validate: true,
                         ingredientName: 'Tomato',
                     },
                     {
                         status : true,
+                        type: 'none',
+                        validate: true,
                         ingredientName: 'Ketchup',
                     },
                     {
                         status : true,
+                        type: 'none',
+                        validate: true,
                         ingredientName: 'Onion',
                     },
                     {
                         status : true,
+                        type: 'none',
+                        validate: true,
                         ingredientName: 'Beef',
                     },
                     {
                         status : true,
+                        type: 'none',
+                        validate: true,
                         ingredientName: 'Tomato',
                     },
                     {
                         status : true,
+                        type: 'none',
+                        validate: true,
                         ingredientName: 'Ketchup',
                     },
                     {
                         status : true,
+                        type: 'none',
+                        validate: true,
                         ingredientName: 'Onion',
                     }
                 ],
@@ -142,25 +172,35 @@ export const Data = [
             {
                 id: 4,
                 productName: 'Turkey Burgers',
-                price: 20.00,
+                priceInt: 20.00,
+                priceF: 20.00,
                 image: "https://www.eatthis.com/wp-content/uploads/sites/4/media/images/ext/184168996/turkey-burger.jpg?resize=640,468&quality=82&strip=all",
                 description: "A traditional ground beef burger can be a good, high-protein meal—especially if it's grass-finished beef, which we'll tell you more about in a second.",
                 choice: false,
+                status: true,
                 ingredients: [
                     {
                         status : true,
+                        type: 'none',
+                        validate: true,
                         ingredientName: 'Beef',
                     },
                     {
                         status : true,
+                        type: 'none',
+                        validate: true,
                         ingredientName: 'Tomato',
                     },
                     {
                         status : true,
+                        type: 'none',
+                        validate: true,
                         ingredientName: 'Ketchup',
                     },
                     {
                         status : true,
+                        type: 'none',
+                        validate: true,
                         ingredientName: 'Onion',
                     }
                 ],
@@ -169,26 +209,36 @@ export const Data = [
             {
                 id: 5,
                 productName: 'Veggie Burgers',
-                price: 110.00,
+                priceInt: 110.00,
+                priceF: 110.00,
                 image: "https://www.eatthis.com/wp-content/uploads/sites/4/media/images/ext/351400125/pumpkin-veggie-burger.jpg?resize=640,468&quality=82&strip=all",
                 description: "A traditional ground beef burger can be a good, high-protein meal—especially if it's grass-finished beef, which we'll tell you more about in a second.",
                 choice: false,
+                status: true,
                 ingredients: [
                     {
                         status : true,
                         ingredientName: 'Beef',
+                        validate: true,
+                        type: 'none',
                     },
                     {
                         status : true,
                         ingredientName: 'Tomato',
+                        validate: true,
+                        type: 'none',
                     },
                     {
                         status : true,
                         ingredientName: 'Ketchup',
+                        validate: true,
+                        type: 'none',
                     },
                     {
                         status : true,
                         ingredientName: 'Onion',
+                        validate: true,
+                        type: 'none',
                     }
                 ],
                 cpt:0,
