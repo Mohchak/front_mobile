@@ -56,36 +56,38 @@ function Table(props) {
         props.setTableId(tableId)
         getMenu(tableId).then( response => {
             if(response.status === 200) {
-                console.log(response.data)
-                let menusTmp = [...response.data]
-                for(let indexMenu = 0; menusTmp[indexMenu]; indexMenu++){
-                    for(let indexProduct = 0; menusTmp[indexMenu].products[indexProduct]; indexProduct++){
-                        menusTmp[indexMenu].products[indexProduct].priceInt = menusTmp[indexMenu].products[indexProduct].price
-                        menusTmp[indexMenu].products[indexProduct].priceF = menusTmp[indexMenu].products[indexProduct].price
-                        menusTmp[indexMenu].products[indexProduct].choice = false
-                        menusTmp[indexMenu].products[indexProduct].status = true
-                        menusTmp[indexMenu].products[indexProduct].cpt = 0
-                        menusTmp[indexMenu].products[indexProduct].productName = menusTmp[indexMenu].products[indexProduct].name
-                        for(let indexIngredients = 0; menusTmp[indexMenu].products[indexProduct].ingredients[indexIngredients]; indexIngredients++){
-                            if(menusTmp[indexMenu].products[indexProduct].ingredients[indexIngredients].type){
-                                menusTmp[indexMenu].products[indexProduct].ingredients[indexIngredients].type = 'none'
-                                menusTmp[indexMenu].products[indexProduct].ingredients[indexIngredients].validate = true
-                            }else{
-                                menusTmp[indexMenu].products[indexProduct].ingredients[indexIngredients].type = 'choice'
-                                menusTmp[indexMenu].products[indexProduct].ingredients[indexIngredients].validate = false
+                if(response.data !== undefined){
+                    let menusTmp = [...response.data]
+                    for(let indexMenu = 0; menusTmp[indexMenu]; indexMenu++){
+                        for(let indexProduct = 0; menusTmp[indexMenu].products[indexProduct]; indexProduct++){
+                            menusTmp[indexMenu].products[indexProduct].priceInt = menusTmp[indexMenu].products[indexProduct].price
+                            menusTmp[indexMenu].products[indexProduct].priceF = menusTmp[indexMenu].products[indexProduct].price
+                            menusTmp[indexMenu].products[indexProduct].choice = false
+                            menusTmp[indexMenu].products[indexProduct].status = true
+                            menusTmp[indexMenu].products[indexProduct].cpt = 0
+                            menusTmp[indexMenu].products[indexProduct].productName = menusTmp[indexMenu].products[indexProduct].name
+                            for(let indexIngredients = 0; menusTmp[indexMenu].products[indexProduct].ingredients[indexIngredients]; indexIngredients++){
+                                if(menusTmp[indexMenu].products[indexProduct].ingredients[indexIngredients].type){
+                                    menusTmp[indexMenu].products[indexProduct].ingredients[indexIngredients].type = 'none'
+                                    menusTmp[indexMenu].products[indexProduct].ingredients[indexIngredients].validate = true
+                                }else{
+                                    menusTmp[indexMenu].products[indexProduct].ingredients[indexIngredients].type = 'choice'
+                                    menusTmp[indexMenu].products[indexProduct].ingredients[indexIngredients].validate = false
+                                }
+                                if(menusTmp[indexMenu].products[indexProduct].ingredients[indexIngredients].status === false){
+                                    menusTmp[indexMenu].products[indexProduct].choice = true
+                                }
+                                for(let indexChoice = 0; menusTmp[indexMenu].products[indexProduct].ingredients[indexIngredients].choices[indexChoice]; indexChoice++){
+                                    menusTmp[indexMenu].products[indexProduct].ingredients[indexIngredients].choices[indexChoice].status = false;
+                                }
                             }
-                            if(menusTmp[indexMenu].products[indexProduct].ingredients[indexIngredients].status === false){
-                                menusTmp[indexMenu].products[indexProduct].choice = true
-                            }
-                            for(let indexChoice = 0; menusTmp[indexMenu].products[indexProduct].ingredients[indexIngredients].choices[indexChoice]; indexChoice++){
-                                menusTmp[indexMenu].products[indexProduct].ingredients[indexIngredients].choices[indexChoice].status = false;
-                            }
+                           
                         }
-                       
                     }
+                    props.setMenus(menusTmp)
+                    setLoading(true)
                 }
-                props.setMenus(menusTmp)
-                setLoading(true)
+                
             }
         })
             .catch(error => {
