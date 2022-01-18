@@ -56,7 +56,8 @@ function Table(props) {
         props.setTableId(tableId)
         getMenu(tableId).then( response => {
             if(response.status === 200) {
-                if(response.data !== undefined){
+                if(response.data !== []){
+                    console.log(response.data)
                     let menusTmp = [...response.data]
                     for(let indexMenu = 0; menusTmp[indexMenu]; indexMenu++){
                         for(let indexProduct = 0; menusTmp[indexMenu].products[indexProduct]; indexProduct++){
