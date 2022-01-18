@@ -50,6 +50,8 @@ function Table(props) {
 
     const {tableId} = useParams()
 
+    const [loading, setLoading] = useState(false)
+
     useEffect(() => {
         props.setTableId(tableId)
         getMenu(tableId).then( response => {
@@ -83,6 +85,7 @@ function Table(props) {
                     }
                 }
                 props.setMenus(menusTmp)
+                setLoading(true)
             }
         })
             .catch(error => {
@@ -93,7 +96,7 @@ function Table(props) {
     return (
         <div>
             {
-                isMobile &&
+                isMobile && loading &&
                 <div>
                     Language : {navigator.language}
                     {/* eslint-disable-next-line react/jsx-no-duplicate-props */}
