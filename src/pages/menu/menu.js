@@ -145,7 +145,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 function calculTotal(menusTmp) {
 
     let total = 0
-    console.log(menusTmp)
     for(let indexMenu = 0; menusTmp[indexMenu]; indexMenu++) {
         for(let indexProduct = 0; menusTmp[indexMenu].products[indexProduct]; indexProduct++) {
             if(menusTmp[indexMenu].products[indexProduct].cpt > 0) {
@@ -154,20 +153,16 @@ function calculTotal(menusTmp) {
                     totalProduct = totalProduct + menusTmp[indexMenu].products[indexProduct].priceInt * menusTmp[indexMenu].products[indexProduct].cpt
                 } else if(menusTmp[indexMenu].products[indexProduct].status === false && menusTmp[indexMenu].products[indexProduct].choice === false){
                     totalProduct = totalProduct + menusTmp[indexMenu].products[indexProduct].priceInt
-                    console.log(menusTmp[indexMenu].products[indexProduct].priceInt)
                     for(let indexIngredient = 0; menusTmp[indexMenu].products[indexProduct].ingredients[indexIngredient]; indexIngredient++){
                         if(menusTmp[indexMenu].products[indexProduct].ingredients[indexIngredient].type === 'none'){
                             if(menusTmp[indexMenu].products[indexProduct].ingredients[indexIngredient].validate){
                                 totalProduct = totalProduct + menusTmp[indexMenu].products[indexProduct].ingredients[indexIngredient].price
-                                console.log(menusTmp[indexMenu].products[indexProduct].ingredients[indexIngredient].ingredientName," ",menusTmp[indexMenu].products[indexProduct].ingredients[indexIngredient].price)
-                            }
+                           }
                         } else {
                             for(let indexChoice = 0; menusTmp[indexMenu].products[indexProduct].ingredients[indexIngredient].choice[indexChoice]; indexChoice++){
-                                    console.log(menusTmp[indexMenu].products[indexProduct].ingredients[indexIngredient].choice[indexChoice])
                                 if(menusTmp[indexMenu].products[indexProduct].ingredients[indexIngredient].choice[indexChoice].status){
                                     totalProduct = totalProduct + menusTmp[indexMenu].products[indexProduct].ingredients[indexIngredient].choice[indexChoice].price
-                                    console.log(menusTmp[indexMenu].products[indexProduct].ingredients[indexIngredient].choice[indexChoice].choiceName," ",menusTmp[indexMenu].products[indexProduct].ingredients[indexIngredient].choice[indexChoice].price)
-                                }
+                               }
                             }
                         }
                     }
@@ -176,7 +171,6 @@ function calculTotal(menusTmp) {
             }
         }
     }
-    console.log(total)
     return total;
 }
 
@@ -243,11 +237,11 @@ function Menu(props) {
                 }
             } else {
                 let choicesTmp = []
-                for(let indexChoice = 0 ; menus[menuId].products[productId].ingredients[index].choice[indexChoice]; indexChoice++) {
+                for(let indexChoice = 0 ; menus[menuId].products[productId].ingredients[index].choices[indexChoice]; indexChoice++) {
                     let choiceTmp = {
-                        choiceName: menus[menuId].products[productId].ingredients[index].choice[indexChoice].choiceName,
-                        status: menus[menuId].products[productId].ingredients[index].choice[indexChoice].status,
-                        price: menus[menuId].products[productId].ingredients[index].choice[indexChoice].price,
+                        choiceName: menus[menuId].products[productId].ingredients[index].choices[indexChoice].choiceName,
+                        status: menus[menuId].products[productId].ingredients[index].choices[indexChoice].status,
+                        price: menus[menuId].products[productId].ingredients[index].choices[indexChoice].price,
                     }
                     choicesTmp.push(choiceTmp)
                 }
@@ -258,7 +252,7 @@ function Menu(props) {
                     validate: menus[menuId].products[productId].ingredients[index].validate,
                     choiceName: menus[menuId].products[productId].ingredients[index].choiceName,
                     choiceNbr : menus[menuId].products[productId].ingredients[index].choiceNbr,
-                    choice : choicesTmp,
+                    choices : choicesTmp,
                 }
             }
             ingredientsTmp.push(ingredientTmp)
@@ -291,15 +285,15 @@ function Menu(props) {
     const checkBoxChange = (ingredientIndex, choiceIndex) => {
 
         let productDialogTmp = {...productDialog}
-        productDialogTmp.ingredients[ingredientIndex].choice[choiceIndex].status = !productDialogTmp.ingredients[ingredientIndex].choice[choiceIndex].status
-        if(productDialogTmp.ingredients[ingredientIndex].choice[choiceIndex].status){
-            productDialogTmp.priceF = productDialogTmp.priceF + productDialogTmp.ingredients[ingredientIndex].choice[choiceIndex].price
+        productDialogTmp.ingredients[ingredientIndex].choices[choiceIndex].status = !productDialogTmp.ingredients[ingredientIndex].choices[choiceIndex].status
+        if(productDialogTmp.ingredients[ingredientIndex].choices[choiceIndex].status){
+            productDialogTmp.priceF = productDialogTmp.priceF + productDialogTmp.ingredients[ingredientIndex].choices[choiceIndex].price
         } else{
-            productDialogTmp.priceF = productDialogTmp.priceF - productDialogTmp.ingredients[ingredientIndex].choice[choiceIndex].price
+            productDialogTmp.priceF = productDialogTmp.priceF - productDialogTmp.ingredients[ingredientIndex].choices[choiceIndex].price
         }
         productDialogTmp.ingredients[ingredientIndex].validate = false
-        for(let index = 0; productDialogTmp.ingredients[ingredientIndex].choice[index]; index++){
-            if(productDialogTmp.ingredients[ingredientIndex].choice[index].status === true) {
+        for(let index = 0; productDialogTmp.ingredients[ingredientIndex].choices[index]; index++){
+            if(productDialogTmp.ingredients[ingredientIndex].choices[index].status === true) {
                 productDialogTmp.ingredients[ingredientIndex].validate = true
             }
         }
@@ -307,8 +301,8 @@ function Menu(props) {
     }
 
     const addProduct = () => {
-
         if(productDialog.choice === false){
+    
             let newMenu =[...menus]
             newMenu[menusID].products[productId].cpt =  newMenu[menusID].products[productId].cpt + 1
             setCptProduct(cptProduct + 1)
@@ -332,8 +326,6 @@ function Menu(props) {
                 for(let index = 0; menus[menusID].products[index]; index++){
                     if(menus[menusID].products[index].id === productDialog.id){
                         if(JSON.stringify(menus[menusID].products[index].ingredients) === JSON.stringify(productDialog.ingredients)){
-                            console.log(menus[menusID].products[index].ingredients)
-                            console.log(productDialog.ingredients)
                             let newMenu = [...menus]
                             newMenu[menusID].products[index].cpt = newMenu[menusID].products[index].cpt + 1
                             setTotal(total + newMenu[menusID].products[index].priceF)
@@ -539,7 +531,7 @@ function Menu(props) {
                                productDialog.ingredients && productDialog.ingredients.map((ingredient, index1) => (
                                    <div key={index1}>
                                        {
-                                           ingredient.status !== undefined && ingredient.status === false && ingredient.type === 'none' &&
+                                           ingredient.status === false && ingredient.type === 'none' &&
                                            <Box  sx={{ flexGrow: 1, alignItems: 'center'  }}>
                                                <Grid container spacing={0}>
                                                    <Grid item xs={10} >
@@ -552,11 +544,11 @@ function Menu(props) {
                                            </Box>
                                        }
                                        {
-                                           ingredient.status !== undefined && ingredient.status && ingredient.type === 'choice' &&
+                                           ingredient.type === 'choice' &&
                                            <Box sx={{ flexGrow: 1, alignItems: 'center' }}>
                                                <Typography> {ingredient.ingredientName} </Typography>
                                                {
-                                                   ingredient.choice && ingredient.choice.map((choice, index2) => (
+                                                   ingredient.choices && ingredient.choices.map((choice, index2) => (
                                                        <Box key={index2}  sx={{ flexGrow: 1, alignItems: 'center' }}>
                                                            <Grid container spacing={0}>
                                                                <Grid item xs={10} >

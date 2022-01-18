@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const url = 'http://192.168.100.14:8080';
+const url = process.env.REACT_APP_URL_API;
 
 
 export const getMenu = (id) => {

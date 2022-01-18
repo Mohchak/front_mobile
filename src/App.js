@@ -10,7 +10,7 @@ import {Data} from "./data/data";
 
 function App() {
 
-    const [menus, setMenus] = useState(Data)
+    const [menus, setMenus] = useState([])
     const [tableId, setTableId] = useState()
     const [cpt, setCpt] = useState(0)
     const [cptProduct, setCptProduct] = useState(0)
@@ -21,7 +21,7 @@ function App() {
             <Routes>
 
                 <Route path="/" element={<DefaultPage />} />
-                <Route path="/:tableId" element={<Table setTableId={setTableId}/>} />
+                <Route path="/:tableId" element={<Table setTableId={setTableId} setMenus={setMenus}/>} />
                 <Route path="/menu" element={<Menu tableId={tableId} menus={menus} setMenus={setMenus}  cpt={cpt} setCpt={setCpt} cptProduct={cptProduct} setCptProduct={setCptProduct} total={total} setTotal={setTotal}/>} />
                 <Route path="/commande" element={<Commande menus={menus} setMenus={setMenus} cpt={cpt} setCpt={setCpt} cptProduct={cptProduct} setCptProduct={setCptProduct} total={total} setTotal={setTotal}/>} />
             </Routes>

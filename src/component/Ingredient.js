@@ -7,28 +7,31 @@ function Ingredient(props) {
     const [loading, setLoading] = useState(false)
     useEffect(() => {
         let ingredientsTmp = []
-        for(let index = 0; props.ingredients[index]; index++){
-            let ingredientTmp = {}
-            if(props.ingredients[index].type === 'none'){
-                if(props.ingredients[index].validate){
-                    ingredientTmp = {name: props.ingredients[index].ingredientName}
-                    ingredientsTmp.push(ingredientTmp)
-                }
-            }else {
-                if(props.ingredients[index].validate === false){
-                    ingredientTmp = {name: props.ingredients[index].ingredientName}
-                    ingredientsTmp.push(ingredientTmp)
-                } else {
-                    for(let indexChoice = 0; props.ingredients[index].choice[indexChoice]; indexChoice++){
-                        if(props.ingredients[index].choice[indexChoice].status){
-                            ingredientTmp = {name: props.ingredients[index].choice[indexChoice].choiceName}
-                            ingredientsTmp.push(ingredientTmp)
+        if(props.ingredients !== undefined){
+            for(let index = 0; props.ingredients[index]; index++){
+                let ingredientTmp = {}
+                if(props.ingredients[index].type === 'none'){
+                    if(props.ingredients[index].validate){
+                        ingredientTmp = {name: props.ingredients[index].ingredientName}
+                        ingredientsTmp.push(ingredientTmp)
+                    }
+                }else {
+                    if(props.ingredients[index].validate === false){
+                        ingredientTmp = {name: props.ingredients[index].ingredientName}
+                        ingredientsTmp.push(ingredientTmp)
+                    } else {
+                        for(let indexChoice = 0; props.ingredients[index].choices[indexChoice]; indexChoice++){
+                            if(props.ingredients[index].choices[indexChoice].status){
+                                ingredientTmp = {name: props.ingredients[index].choices[indexChoice].choiceName}
+                                ingredientsTmp.push(ingredientTmp)
+                            }
                         }
                     }
                 }
+    
             }
-
         }
+        
         setIngredients(ingredientsTmp)
         setLoading(true)
     }, [props.ingredients])
