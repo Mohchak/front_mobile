@@ -20,9 +20,9 @@ function Ingredient(props) {
                         ingredientTmp = {name: props.ingredients[index].ingredientName}
                         ingredientsTmp.push(ingredientTmp)
                     } else {
-                        for(let indexChoice = 0; props.ingredients[index].choices[indexChoice]; indexChoice++){
-                            if(props.ingredients[index].choices[indexChoice].status){
-                                ingredientTmp = {name: props.ingredients[index].choices[indexChoice].choiceName}
+                        for(let indexChoice = 0; props.ingredients[index].choice[indexChoice]; indexChoice++){
+                            if(props.ingredients[index].choice[indexChoice].status){
+                                ingredientTmp = {name: props.ingredients[index].choice[indexChoice].choiceName}
                                 ingredientsTmp.push(ingredientTmp)
                             }
                         }

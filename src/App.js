@@ -23,7 +23,7 @@ function App() {
                 <Route path="/" element={<DefaultPage />} />
                 <Route path="/:tableId" element={<Table setTableId={setTableId} setMenus={setMenus}/>} />
                 <Route path="/menu" element={<Menu tableId={tableId} menus={menus} setMenus={setMenus}  cpt={cpt} setCpt={setCpt} cptProduct={cptProduct} setCptProduct={setCptProduct} total={total} setTotal={setTotal}/>} />
-                <Route path="/commande" element={<Commande menus={menus} setMenus={setMenus} cpt={cpt} setCpt={setCpt} cptProduct={cptProduct} setCptProduct={setCptProduct} total={total} setTotal={setTotal}/>} />
+                <Route path="/commande" element={<Commande menus={menus} setMenus={setMenus} cpt={cpt} setCpt={setCpt} cptProduct={cptProduct} setCptProduct={setCptProduct} total={total} setTotal={setTotal} tableId={tableId}/>} />
             </Routes>
         </BrowserRouter>
 

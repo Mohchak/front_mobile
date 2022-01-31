@@ -18,6 +18,7 @@ import AddIcon from "@mui/icons-material/Add";
 import PropTypes from "prop-types";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import {Link} from "react-router-dom";
+import { newCommande } from '../../api/api';
 
 function ElevationScroll(props) {
     const { children, window } = props;
@@ -96,17 +97,37 @@ function Commande(props) {
     }
     
     const validerCommand = () => {
-        let data = []
-
+        let productCommand = []
+        
         for(let indexMenu = 0; menus[indexMenu]; indexMenu++ ){
             for(let indexProduct = 0; menus[indexMenu].products[indexProduct]; indexProduct++) {
                 if(menus[indexMenu].products[indexProduct].cpt > 0) {
-                    data.push(menus[indexMenu].products[indexProduct])
+                    let ingredients = ''
+                    for(let indexIngredient = 0; menus[indexMenu].products[indexProduct].ingredients[indexIngredient]; indexIngredient++){
+                        if(menus[indexMenu].products[indexProduct].ingredients[indexIngredient].statusChecked === false) {
+                            if(menus[indexMenu].products[indexProduct].ingredients[indexIngredient].validate){
+                                if(menus[indexMenu].products[indexProduct].ingredients[indexIngredient].type === "none"){
+                                    ingredients = ingredients + menus[indexMenu].products[indexProduct].ingredients[indexIngredient].ingredientName + ', '
+                                } else {
+                                    for(let indexChoice = 0; menus[indexMenu].products[indexProduct].ingredients[indexIngredient].choice[indexChoice]; indexChoice++){
+                                        if(menus[indexMenu].products[indexProduct].ingredients[indexIngredient].choice[indexChoice].status){
+                                            ingredients = ingredients + menus[indexMenu].products[indexProduct].ingredients[indexIngredient].choice[indexChoice].choiceName + ', '
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    productCommand.push({name:menus[indexMenu].products[indexProduct].productName, cpt:menus[indexMenu].products[indexProduct].cpt,ingredients: ingredients, tableId: props.tableId})
                 }
             }
         }
-
+        let data = {
+            commandRequests: productCommand,
+            tableId: props.tableId,
+        }
         console.log(data)
+        newCommande(data)
     }
     
     return (

@@ -75,11 +75,11 @@ function Table(props) {
                                     menusTmp[indexMenu].products[indexProduct].ingredients[indexIngredients].type = 'choice'
                                     menusTmp[indexMenu].products[indexProduct].ingredients[indexIngredients].validate = false
                                 }
-                                if(menusTmp[indexMenu].products[indexProduct].ingredients[indexIngredients].status === false){
+                                if(menusTmp[indexMenu].products[indexProduct].ingredients[indexIngredients].statusChecked === false){
                                     menusTmp[indexMenu].products[indexProduct].choice = true
                                 }
-                                for(let indexChoice = 0; menusTmp[indexMenu].products[indexProduct].ingredients[indexIngredients].choices[indexChoice]; indexChoice++){
-                                    menusTmp[indexMenu].products[indexProduct].ingredients[indexIngredients].choices[indexChoice].status = false;
+                                for(let indexChoice = 0; menusTmp[indexMenu].products[indexProduct].ingredients[indexIngredients].choice[indexChoice]; indexChoice++){
+                                    menusTmp[indexMenu].products[indexProduct].ingredients[indexIngredients].choice[indexChoice].status = false;
                                 }
                             }
                            

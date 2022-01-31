@@ -16,3 +16,11 @@ export const getMenus = () => {
         url: url + '/api2/table' ,
     })
 }
+
+export const newCommande = (commandData) => {
+    return axios({
+        method: 'POST',
+        url: url + '/api2/table' ,
+        data: commandData,
+    })
+}
