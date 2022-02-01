@@ -60,6 +60,7 @@ function Table(props) {
             if(response.status === 200) {
                 setProgress('200')
                 if(response.data !== []){
+                    setProgress('response.data !== []')
                     console.log(response.data)
                     let menusTmp = [...response.data]
                     for(let indexMenu = 0; menusTmp[indexMenu]; indexMenu++){
@@ -95,6 +96,7 @@ function Table(props) {
             }
         })
             .catch(error => {
+                setProgress(error)
                 console.log(error)
             })
     },[])
