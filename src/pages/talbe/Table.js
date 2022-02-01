@@ -96,7 +96,7 @@ function Table(props) {
             }
         })
             .catch(error => {
-                setProgress(error)
+                setProgress('error')
                 console.log(error)
             })
     },[])
