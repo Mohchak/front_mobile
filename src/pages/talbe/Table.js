@@ -52,10 +52,13 @@ function Table(props) {
 
     const [loading, setLoading] = useState(false)
 
+    const [progress, setProgress] = useState('')
+
     useEffect(() => {
         props.setTableId(tableId)
         getMenu(tableId).then( response => {
             if(response.status === 200) {
+                setProgress('200')
                 if(response.data !== []){
                     console.log(response.data)
                     let menusTmp = [...response.data]
@@ -102,6 +105,7 @@ function Table(props) {
                 isMobile &&
                 <div>
                     Language : {navigator.language}
+                    Progress : {progress}
                     {/* eslint-disable-next-line react/jsx-no-duplicate-props */}
                     <Link to="/menu">
                         <Button variant="outlined" sx={styleButton1} >Voir le menu</Button>
