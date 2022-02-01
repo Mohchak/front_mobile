@@ -99,7 +99,7 @@ function Table(props) {
     return (
         <div>
             {
-                isMobile && loading &&
+                isMobile &&
                 <div>
                     Language : {navigator.language}
                     {/* eslint-disable-next-line react/jsx-no-duplicate-props */}
