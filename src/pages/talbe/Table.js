@@ -104,7 +104,7 @@ function Table(props) {
     return (
         <div>
             {
-                isMobile &&
+                isMobile && loading &&
                 <div>
                     Language : {navigator.language}
                     Progress : {progress}
